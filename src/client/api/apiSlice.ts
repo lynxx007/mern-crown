@@ -7,7 +7,10 @@ export const apiSlice = createApi({
     home: builder.query({
       query: () => '/home',
     }),
+    getShopData:builder.query({
+      query: ()=>'/shop'
+    })
   }),
 });
 
-export const { useHomeQuery } = apiSlice;
+export const { useHomeQuery,useGetShopDataQuery } = apiSlice;
