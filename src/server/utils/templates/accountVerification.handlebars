@@ -3,52 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Account Verification</title>
+  <title>Forgotten Password</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
+      font-family: sans-serif;
+      background-color: #333;
+      color: #fff;
     }
 
     .container {
-      max-width: 600px;
-      margin: 20px auto;
-      background-color: #ffffff;
+      width: 600px;
+      margin: 0 auto;
       padding: 20px;
+      background-color: #222;
       border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    h1 {
-      color: #333333;
+    .header {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
     }
 
-    p {
-      color: #666666;
+    .message {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 20px;
     }
 
-    .button {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #3498db;
-      color: #ffffff;
+    .link {
+      display: block;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
       text-decoration: none;
+      margin-top: 20px;
+      padding: 15px 30px;
+      background-color: #424242;
+      border: 1px solid #666;
       border-radius: 5px;
+    }
+
+    .footer {
+      font-size: 14px;
+      text-align: center;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Account Verification</h1>
-    <p>Hello {{username}},</p>
-    <p>Thank you for creating an account with us. To complete the registration process, please click the button below to verify your email address:</p>
-    <p>
-      <a href="{{link}}" class="button">Verify Email</a>
-    </p>
-    <p>If you didn't create an account, you can ignore this email.</p>
-    <p>Best regards,<br>CROWN Team</p>
+    <div class="header">
+      Password Reset Request
+    </div>
+    <div class="message">
+      Hi, {{username}},
+      <br>
+      Looks like you lost your password. Don't worry, happens to the best of us. Click the link below to pick a new one and get back on track.
+    </div>
+    <a href="{{link}}" class="link">Reset Password, Dude</a>
+    <div class="footer">
+      This link is good for 15 minutes, so use it before it expires.
+    </div>
   </div>
 </body>
 </html>
