@@ -18,6 +18,7 @@ interface IUser extends Document {
   refreshToken: Array<string>;
   isEmailVerified: boolean;
   active: boolean;
+  city: string;
 }
 
 interface IUserMethods {
@@ -124,6 +125,9 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
     active: {
       type: Boolean,
       default: true,
+    },
+    city: {
+      type: String,
     },
   },
   {
