@@ -2,6 +2,11 @@
   "name": "vite-react-typescript-starter",
   "private": true,
   "version": "0.0.0",
+  "author": {
+    "name": "Luthfi Rizky",
+    "email": "luthfirizky777@gmail.com",
+    "url": "https://luthfirizky.netlify.app"
+  },
   "scripts": {
     "dev": "nodemon src/server/main.ts -w src/server",
     "start": "NODE_ENV=production ts-node src/server/main.ts",
