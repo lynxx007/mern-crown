@@ -1,8 +1,8 @@
-import type { User } from "./UserObject";
+import type { IUser } from "../server/models/UserModel";
 declare global {
   namespace Express {
     interface Request {
-      user: User;
+      user: IUser;
     }
   }
 }
