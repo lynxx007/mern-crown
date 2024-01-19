@@ -1,58 +1,70 @@
 import { createSlice, Slice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { useAppSelector } from "../../hooks/reduxHooks";
+import { ResponseLogin } from "../../api/authApiSlice";
+import { resProfile } from "../../api/userApiSlice";
+import { decodeToken } from "react-jwt";
 
 export interface UserState {
-  username: string | undefined;
-  email: string | undefined;
-  firstName: string | undefined;
-  lastName: string | undefined;
-  imageUrl?: string | undefined;
-  address?: string | undefined;
-  roles: Array<string> | undefined;
+  user:
+    | {
+        username: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        imageUrl?: string;
+        address?: string;
+        roles: Array<string>;
+        city?: string;
+        _id: string;
+      }
+    | undefined;
   accessToken: string | undefined;
 }
 
+const googleToken = localStorage.getItem("googleToken");
+
 const initialState: UserState = {
-  username: undefined,
-  email: undefined,
-  firstName: undefined,
-  lastName: undefined,
-  imageUrl: undefined,
-  address: undefined,
-  roles: undefined,
-  accessToken: undefined,
+  user: googleToken
+    ? (decodeToken(googleToken) as {
+        username: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        imageUrl?: string;
+        _id: string;
+        roles: Array<string>;
+      })
+    : undefined,
+  accessToken: googleToken ? googleToken : undefined,
 };
 
 const authSlice: Slice<UserState> = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logIn: (state, action) => {
-      state.username = action.payload.username;
-      state.email = action.payload.email;
-      state.firstName = action.payload.firstName;
-      state.lastName = action.payload.lastName;
-      state.imageUrl = action.payload.imageUrl;
-      state.address = action.payload.address;
-      state.roles = action.payload.roles;
+    logIn: (state, action: PayloadAction<ResponseLogin>) => {
+      state.user = action.payload.user;
       state.accessToken = action.payload.accessToken;
     },
     logOut: (state) => {
-      state.username = undefined;
-      state.email = undefined;
-      state.firstName = undefined;
-      state.lastName = undefined;
-      state.imageUrl = undefined;
-      state.address = undefined;
-      state.roles = undefined;
+      state.user = undefined;
       state.accessToken = undefined;
+    },
+    update: (state, action: PayloadAction<resProfile>) => {
+      state.user = action.payload.user;
+    },
+    deleteImage: (state) => {
+      if (state.user?.imageUrl) {
+        state.user.imageUrl = undefined;
+      }
+    },
+    getUser: (state, action: PayloadAction<resProfile>) => {
+      state.user = action.payload.user;
     },
   },
 });
 
-export const { logIn, logOut } = authSlice.actions;
-
-// export const selectUserAccessToken = useAppSelector(state => state.auth.user?.accessToken)
+export const { logIn, logOut, deleteImage, update, getUser } =
+  authSlice.actions;
 
 export default authSlice.reducer;
