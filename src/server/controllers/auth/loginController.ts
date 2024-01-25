@@ -80,17 +80,9 @@ const loginUser = expressAsyncHandler(async (req, res) => {
 
     res.status(200).json({
       success: true,
-      firstName: existUser.firstName,
-      lastName: existUser.lastName,
-      username: existUser.username,
-      imageUrl: existUser.imageUrl,
-      accessToken,
-      address: existUser.address,
-      email: existUser.email,
-      roles: existUser.roles,
-      city: existUser.city,
+      user: existUser,
       msg: `${existUser.username} logged in successfully`,
-      _id: existUser._id,
+      accessToken,
     });
   }
 });
