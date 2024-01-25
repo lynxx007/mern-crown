@@ -12,6 +12,7 @@ import { createClient } from "redis";
 import UserRoute from "../server/routes/user";
 import PaymentRoute from "../server/routes/payment";
 import "dotenv/config";
+import googleAuth from "./config/passportSetup";
 
 connectDb();
 
@@ -35,9 +36,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(mongoSanitize());
 
-app.get("/hello", (_, res) => {
-  res.send("Hello Vite + React + TypeScript!");
-});
+googleAuth();
 
 app.use("/api/v1/home", HomeRoute);
 app.use("/api/v1/shop", ShopRoute);
