@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import validate from "validator";
 import { USER } from "../constants";
 
-interface IUser extends Document {
+export interface IUser extends Document {
   username: string;
   firstName: string;
   lastName: string;
@@ -25,7 +25,7 @@ interface IUserMethods {
   comparePassword(givenPassword: string): Promise<boolean>;
 }
 
-type UserModel = mongoose.Model<IUser, {}, IUserMethods>;
+export type UserModel = mongoose.Model<IUser, unknown, IUserMethods>;
 const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
   {
     username: {
@@ -64,7 +64,6 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
     },
     password: {
       type: String,
-      required: true,
       select: false,
       validate: {
         validator: function (value: string) {
@@ -146,6 +145,13 @@ UserSchema.pre("save", async function (next) {
 UserSchema.methods.comparePassword = async function (givenPassword: string) {
   return await bcrypt.compare(givenPassword, this.password);
 };
+
+UserSchema.set("toJSON", {
+  transform: function (doc, ret) {
+    delete ret.password;
+    return ret;
+  },
+});
 
 const User = mongoose.model<IUser, UserModel>("User", UserSchema);
 export default User;
