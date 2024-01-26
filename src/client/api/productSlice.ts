@@ -24,8 +24,19 @@ export const productApiSlice = apiSlice.injectEndpoints({
         url: `/product/searchProducts?name=${name}`,
       }),
     }),
+    getAllProducts: builder.query<
+      { totalProducts: Array<{ info: any[] }> },
+      void
+    >({
+      query: () => ({
+        url: "/product/getAllProducts",
+      }),
+    }),
   }),
 });
 
-export const { useAddProductMutation, useSearchProductsQuery } =
-  productApiSlice;
+export const {
+  useAddProductMutation,
+  useSearchProductsQuery,
+  useGetAllProductsQuery,
+} = productApiSlice;
