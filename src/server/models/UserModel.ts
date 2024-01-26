@@ -6,7 +6,7 @@ import { USER } from "../constants";
 export interface IUser extends Document {
   username: string;
   firstName: string;
-  lastName: string;
+  lastName?: string;
   email: string;
   password: string;
   passwordConfirm?: string;
@@ -53,7 +53,6 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
     },
     lastName: {
       type: String,
-      required: true,
       trim: true,
       validate: {
         validator: function (value: string) {
