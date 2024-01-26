@@ -14,11 +14,9 @@ const googleAuth = () => {
         clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         callbackURL: `${domain}/api/v1${callbackURL}`,
       },
-      async (accessToken, refreshToken, profile, done) => {
-        console.log(profile);
-
+      async (_accessToken, _refreshToken, profile, done) => {
         try {
-          let user = await User.findOne({ googleId: profile.id });
+          let user = await User.findOne({ email: profile._json.email });
 
           if (!user) {
             const name = profile.displayName.split(" ");
@@ -31,7 +29,11 @@ const googleAuth = () => {
               googleId: profile.id,
               isEmailVerified: profile._json.email_verified,
             });
+          } else {
+            user.googleId = profile.id;
+            await user.save();
           }
+
           done(null, user);
         } catch (error) {
           if (error instanceof Error) {
