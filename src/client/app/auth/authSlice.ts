@@ -3,39 +3,28 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { ResponseLogin } from "../../api/authApiSlice";
 import { resProfile } from "../../api/userApiSlice";
 import { decodeToken } from "react-jwt";
-
 export interface UserState {
   user:
     | {
-        username: string;
-        email: string;
+        _id: string;
         firstName: string;
         lastName: string;
+        username: string;
         imageUrl?: string;
         address?: string;
+        email: string;
         roles: Array<string>;
         city?: string;
-        _id: string;
       }
     | undefined;
   accessToken: string | undefined;
 }
 
-const googleToken = localStorage.getItem("googleToken");
+// const googleToken = localStorage.getItem("googleToken");
 
 const initialState: UserState = {
-  user: googleToken
-    ? (decodeToken(googleToken) as {
-        username: string;
-        email: string;
-        firstName: string;
-        lastName: string;
-        imageUrl?: string;
-        _id: string;
-        roles: Array<string>;
-      })
-    : undefined,
-  accessToken: googleToken ? googleToken : undefined,
+  user: undefined,
+  accessToken: undefined,
 };
 
 const authSlice: Slice<UserState> = createSlice({
@@ -61,10 +50,24 @@ const authSlice: Slice<UserState> = createSlice({
     getUser: (state, action: PayloadAction<resProfile>) => {
       state.user = action.payload.user;
     },
+    getGoogleUser: (state, action: PayloadAction<string>) => {
+      const token = decodeToken(action.payload) as {
+        roles: string[];
+        firstName: string;
+        lastName: string;
+        username: string;
+        email: string;
+        imageUrl: string;
+        _id: string;
+      };
+      console.log(token);
+      state.user = token;
+      state.accessToken = action.payload;
+    },
   },
 });
 
-export const { logIn, logOut, deleteImage, update, getUser } =
+export const { logIn, logOut, deleteImage, update, getUser, getGoogleUser } =
   authSlice.actions;
 
 export default authSlice.reducer;
