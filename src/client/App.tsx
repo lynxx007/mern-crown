@@ -14,7 +14,7 @@ import ResetPassword from "./routes/ResetPassword";
 import AuthRequired from "./components/AuthRequired";
 import DashboardLayout from "./routes/Dashboard";
 import ProfilePage from "./routes/Profile";
-import { useAppDispatch } from "./hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "./hooks/reduxHooks";
 import { useGetUserProfileQuery } from "./api/userApiSlice";
 import { getUser } from "./app/auth/authSlice";
 import { resetSuccess, setSuccess } from "./app/UI/uiSlice";
@@ -25,6 +25,7 @@ import Checkout from "./routes/Checkout";
 import PaymentPage from "./routes/Payment";
 import PaymentSuccessPage from "./routes/PaymentSuccess";
 import Overview from "./routes/dashboard/Overview";
+import GoogleRedirectHandler from "./components/GoogleRedirectHandler";
 
 const router = createBrowserRouter([
   {
@@ -131,15 +132,25 @@ const router = createBrowserRouter([
         path: "payment/success",
         element: <PaymentSuccessPage />,
       },
+      {
+        path: "google/redirect",
+        element: <GoogleRedirectHandler />,
+      },
     ],
   },
 ]);
 
 function App() {
+  const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
   const { data, isSuccess } = useGetUserProfileQuery();
 
   useEffect(() => {
+    if (user) {
+      dispatch(setSuccess(`Welcome ${user.username}`));
+      setTimeout(() => dispatch(resetSuccess(undefined)), 5000);
+      return;
+    }
     if (isSuccess) {
       dispatch(getUser(data));
       dispatch(setSuccess(data.msg));
