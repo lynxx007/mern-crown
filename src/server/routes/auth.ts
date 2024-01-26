@@ -36,8 +36,8 @@ router.get(
   passport.authenticate("google", {
     session: false,
     scope: ["profile", "email"],
-    accessType: "offline",
-    prompt: "consent",
+    accessType: "online",
+    prompt: "select_account",
   })
 );
 
@@ -49,7 +49,7 @@ router.get(
   }),
   async (req, res) => {
     const existingUser = await User.findById(req.user._id);
-    jwt.sign(
+    const accessToken = jwt.sign(
       {
         _id: req.user._id,
         roles: existingUser?.roles,
@@ -62,19 +62,9 @@ router.get(
       process.env.JWT_ACCESS_KEY as string,
       {
         expiresIn: "20m",
-      },
-      (err, token) => {
-        res.send(`
-        <html>
-        <script>
-        window.localStorage.setItem("googleToken","${token}");
-        window.location.href = "/";
-        </script>
-        </html>
-        `);
-        // res.json({ token });
       }
     );
+    res.redirect(`/google/redirect?token=${accessToken}`);
   }
 );
 
