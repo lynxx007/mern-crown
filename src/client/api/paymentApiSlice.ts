@@ -12,7 +12,19 @@ export const paymentApiSlice = apiSlice.injectEndpoints({
         body,
       }),
     }),
+    getTotalAmountPaid: builder.query<
+      {
+        totalAll: number;
+        totalByMonth: Array<{ month: string; total: number }>;
+      },
+      void
+    >({
+      query: () => ({
+        url: "/payment/getAmountPaid",
+      }),
+    }),
   }),
 });
 
-export const { useCreatePaymentIntentMutation } = paymentApiSlice;
+export const { useCreatePaymentIntentMutation, useGetTotalAmountPaidQuery } =
+  paymentApiSlice;
