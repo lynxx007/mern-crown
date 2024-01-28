@@ -10,6 +10,7 @@ const Spinner = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        flexDirection: "column",
       }}
     >
       <CircularProgress />
