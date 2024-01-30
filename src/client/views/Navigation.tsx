@@ -142,6 +142,7 @@ function Navigation({
               location.pathname === "/shop/jackets" ||
               location.pathname === "/shop/women" ||
               location.pathname === "/shop/men" ||
+              location.pathname === "/checkout" ||
               open ? (
                 <MenuIcon sx={{ visibility: "hidden", display: "none" }} />
               ) : (
