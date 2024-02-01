@@ -56,30 +56,30 @@ function Error() {
         </Container>
       );
     }
-    return (
-      <Container
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <ErrorIcon sx={{ fontSize: "5rem", color: "red" }} />
-        <Typography variant="h4">Something went wrong!</Typography>
-        <Button
-          LinkComponent={Link}
-          href="/"
-          variant="contained"
-          color="primary"
-          sx={{ mt: 2 }}
-        >
-          Go back to home
-        </Button>
-      </Container>
-    );
   }
+  return (
+    <Container
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+      }}
+    >
+      <ErrorIcon sx={{ fontSize: "5rem", color: "red" }} />
+      <Typography variant="h4">Something went wrong!</Typography>
+      <Button
+        LinkComponent={Link}
+        href="/"
+        variant="contained"
+        color="primary"
+        sx={{ mt: 2 }}
+      >
+        Go back to home
+      </Button>
+    </Container>
+  );
 }
 
 export default Error;
