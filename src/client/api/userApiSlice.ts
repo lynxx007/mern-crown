@@ -39,6 +39,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
         count: number;
         numberOfPages: number;
         users: Array<resProfile["user"]>;
+        howManyUsersHasBeenCreatedInAMonth: Array<{
+          _id: {
+            month: number;
+            year: number;
+          };
+          count: number;
+        }>;
       },
       number | undefined
     >({
