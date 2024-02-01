@@ -8,19 +8,21 @@ import Box from "@mui/material/Box";
 import { useAppDispatch } from "../hooks/reduxHooks";
 import { addItem } from "../app/cart/cartSlice";
 import { resetSuccess, setSuccess } from "../app/UI/uiSlice";
+
 interface Item {
   _id: string;
   name: string;
   imageUrl: string;
   price: number;
-
   size: string[];
   quantity?: number;
 }
 
 const ProductCard = ({ items }: { items: Item }) => {
   const { imageUrl, name, price } = items;
+
   const dispatch = useAppDispatch();
+
   const addToCart = () => {
     dispatch(addItem(items));
     dispatch(setSuccess("Item added to cart"));
@@ -50,12 +52,13 @@ const ProductCard = ({ items }: { items: Item }) => {
         image={imageUrl}
         sx={{
           minWidth: "100%",
-          height: "75%", // Adjust height to leave space for name and price
+          height: "60%", // Adjust height to leave space for name and price
           objectFit: "cover",
           mb: 2,
           transition: "opacity 0.3s ease",
         }}
       />
+
       <Button
         variant="contained"
         className="button"
