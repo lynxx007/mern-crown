@@ -22,10 +22,11 @@ import ChartIcon from "@mui/icons-material/BarChart";
 import ProductsIcon from "@mui/icons-material/LocalMall";
 import CustomersIcon from "@mui/icons-material/Person";
 import { Outlet, Link as Router } from "react-router-dom";
-import SettingsIcon from "@mui/icons-material/Settings";
-import LogoutIcon from "@mui/icons-material/ExitToApp";
 
-import OrderIcon from "@mui/icons-material/Receipt";
+import LogoutIcon from "@mui/icons-material/ExitToApp";
+import { useAppDispatch } from "../hooks/reduxHooks";
+import { logOut } from "../app/auth/authSlice";
+import { resetSuccess, setSuccess } from "../app/UI/uiSlice";
 
 const drawerWidth = 240;
 
@@ -73,29 +74,19 @@ const listItemsUp = [
     icon: <CustomersIcon />,
     to: "/dashboard/customers",
   },
-  {
-    text: "Orders",
-    icon: <OrderIcon />,
-    to: "/dashboard/orders",
-  },
 ];
 
 const listItemsDown = [
   {
-    text: "Settings",
-    icon: <SettingsIcon />,
-    to: "/dashboard/settings",
-  },
-  {
     text: "Logout",
     icon: <LogoutIcon />,
     to: "/signIn",
-    onclick: () => {},
   },
 ];
 const SideNav = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const dispatch = useAppDispatch();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -164,7 +155,15 @@ const SideNav = () => {
         <List>
           {listItemsDown.map((item) => (
             <ListItem key={item.text} disablePadding>
-              <ListItemButton component={Router} to={item.to}>
+              <ListItemButton
+                component={Router}
+                to={item.to}
+                onClick={() => {
+                  dispatch(logOut(undefined));
+                  dispatch(setSuccess("Logged out"));
+                  setTimeout(() => dispatch(resetSuccess(undefined)), 5000);
+                }}
+              >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItemButton>
