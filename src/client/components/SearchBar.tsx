@@ -1,30 +1,29 @@
+import React from "react";
 import TextField from "@mui/material/TextField";
-import * as React from "react";
+import IconButton from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
-import IconButton from "@mui/material/IconButton";
 
-const SearchBar = () => {
-  const [query, setQuery] = React.useState<string>("");
+type SearchBarProps = {
+  query: string;
+  onQueryChange: (query: string) => void;
+};
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  };
-
+const SearchBar: React.FC<SearchBarProps> = ({ query, onQueryChange }) => {
   return (
-    <div>
+    <>
       <TextField
-        value={query}
-        onChange={handleSearch}
         label="Search"
         variant="outlined"
         placeholder="Search for products"
         size="small"
+        value={query}
+        onChange={(e) => onQueryChange(e.target.value)}
       />
       <IconButton type="submit" aria-label="search">
         <SearchIcon />
       </IconButton>
-    </div>
+    </>
   );
 };
 
-export default SearchBar;
+export default React.memo(SearchBar);
