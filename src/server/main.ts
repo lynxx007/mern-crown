@@ -32,6 +32,8 @@ client.connect();
 
 const app = express();
 
+ViteExpress.config({ mode: "production" });
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(mongoSanitize());
