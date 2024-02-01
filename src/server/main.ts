@@ -46,6 +46,6 @@ app.use("/api/v1/product", ProductRoute);
 app.use("/api/v1/payment", PaymentRoute);
 
 app.use(errorHandler);
-ViteExpress.listen(app, 3000, () =>
+ViteExpress.listen(app, Number(process.env.PORT), () =>
   console.log("Server is listening on port 3000...")
 );
