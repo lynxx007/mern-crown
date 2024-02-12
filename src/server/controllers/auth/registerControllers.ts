@@ -45,7 +45,7 @@ const registerUser = expressAsyncHandler(async (req, res) => {
   }
 
   if (registeredUser) {
-    let emailVerificationToken = await VerifyToken.create({
+    const emailVerificationToken = await VerifyToken.create({
       _userId: registeredUser._id,
       token: randomBytes(32).toString("hex"),
     });

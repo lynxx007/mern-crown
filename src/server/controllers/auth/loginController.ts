@@ -45,7 +45,7 @@ const loginUser = expressAsyncHandler(async (req, res) => {
 
       res.clearCookie("jwt", {
         httpOnly: true,
-        sameSite: "none",
+        sameSite: "lax",
         secure: true,
       });
     }
@@ -73,7 +73,7 @@ const loginUser = expressAsyncHandler(async (req, res) => {
 
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
-      sameSite: "none",
+      sameSite: "lax",
       secure: true,
       maxAge: 24 * 60 * 60 * 1000,
     });

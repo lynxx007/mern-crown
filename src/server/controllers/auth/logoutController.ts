@@ -27,7 +27,7 @@ const logout = expressAsyncHandler(async (req, res) => {
   await existUser.save();
 
   res.clearCookie("jwt", {
-    sameSite: "none",
+    sameSite: "lax",
     secure: true,
     httpOnly: true,
   });
