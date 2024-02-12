@@ -8,7 +8,7 @@ import AuthRoute from "../server/routes/auth";
 import ProductRoute from "../server/routes/product";
 import cookieParser from "cookie-parser";
 import mongoSanitize from "express-mongo-sanitize";
-import { createClient } from "redis";
+// import { createClient } from "redis";
 import UserRoute from "../server/routes/user";
 import PaymentRoute from "../server/routes/payment";
 import "dotenv/config";
@@ -16,19 +16,19 @@ import googleAuth from "./config/passportSetup";
 
 connectDb();
 
-export const client = createClient({
-  password: process.env.REDIS_PASSWORD,
-  socket: {
-    host: process.env.REDIS_HOST,
-    port: Number(process.env.REDIS_PORT),
-  },
-});
+// export const client = createClient({
+//   password: process.env.REDIS_PASSWORD,
+//   socket: {
+//     host: process.env.REDIS_HOST,
+//     port: Number(process.env.REDIS_PORT),
+//   },
+// });
 
-client.on("connect", () => {
-  console.log("Redis client connected to the server");
-});
+// client.on("connect", () => {
+//   console.log("Redis client connected to the server");
+// });
 
-client.connect();
+// client.connect();
 
 const app = express();
 
